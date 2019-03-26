@@ -11,8 +11,9 @@
 #include "interface/buttonirq.h"
 #include "interface/buttonscontrollercallbackcaller.h"
 
-class ButtonController : public interface::ButtonIrq,
-						 public interface::ButtonsControllerCallbackProvider
+class ButtonController : public interface::ButtonsControllerCallbackProvider,
+						 public interface::ButtonIrq,
+						 public XFBehavior
 {
 public:
 	ButtonController();
@@ -27,6 +28,22 @@ protected:
 	*/
 	virtual bool registerCallback(ButtonsControllerCallbackProvider * callbackProvider,
 	                              ButtonsControllerCallbackProvider::CallbackMethod callbackMethod);
+	/**
+	* Executes the current event in its implemented behavior.
+	* This method needs to be overridden to implement the
+	* behavior (i.e. state machine) needed.
+	*/
+	virtual XFEventStatus processEvent();
+
+    typedef enum
+    {
+    	STATE_UNKWNOWN = 0 ,
+    	STATE_INITIAL = 1,
+		STATE_CHECK_BUTTON = 2,
+    	STATE_DEBOUNCE = 3
+    }controllerState;
+
+    controllerState _currentState;
 
 private:
 	ButtonsControllerCallbackProvider* provider;

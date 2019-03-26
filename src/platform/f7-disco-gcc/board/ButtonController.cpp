@@ -8,8 +8,7 @@
 #include <ButtonController.h>
 
 ButtonController::ButtonController() {
-	// TODO Auto-generated constructor stub
-
+	_currentState = STATE_INITIAL;
 }
 
 ButtonController::~ButtonController() {
@@ -24,4 +23,13 @@ bool ButtonController::registerCallback(
 		ButtonsControllerCallbackProvider::CallbackMethod callbackMethod) {
 	provider = callbackProvider;
 	callback = callbackMethod;
+}
+
+XFEventStatus ButtonController::processEvent() {
+	XFEventStatus status = XFEventStatus::Unknown;
+
+	switch(_currentState){
+	case STATE_INITIAL:
+	}
+	return status;
 }

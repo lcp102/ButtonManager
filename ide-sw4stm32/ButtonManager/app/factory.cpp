@@ -40,9 +40,6 @@ void Factory::build() {
 	//start the xf
 	XF_exec();
 	logger->startBehavior();
-	logger->onButtonLongPressed(1);
-	logger->onButtonShortPressed(2);
-
 }
 
 ButtonEventsLogger* Factory::getLogger() {
