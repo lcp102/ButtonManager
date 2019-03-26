@@ -6,9 +6,19 @@
  */
 
 #include <ButtonController.h>
+#include "event/events.h"
+
 
 ButtonController::ButtonController() {
 	_currentState = STATE_INITIAL;
+	Button0Pressed = false;
+	Button1Pressed = false;
+	Button2Pressed = false;
+	Button3Pressed = false;
+	Button0Irq = false;
+	Button1Irq = false;
+	Button2Irq = false;
+	Button3Irq = false;
 }
 
 ButtonController::~ButtonController() {
@@ -23,6 +33,15 @@ bool ButtonController::registerCallback(
 		ButtonsControllerCallbackProvider::CallbackMethod callbackMethod) {
 	provider = callbackProvider;
 	callback = callbackMethod;
+	return true;
+}
+
+ButtonController* ButtonController::getInstance() {
+	static ButtonController* ButtonControllerInstance = nullptr;
+	if(ButtonControllerInstance == nullptr){
+		ButtonControllerInstance = new ButtonController();
+	}
+	return ButtonControllerInstance;
 }
 
 XFEventStatus ButtonController::processEvent() {
@@ -30,6 +49,40 @@ XFEventStatus ButtonController::processEvent() {
 
 	switch(_currentState){
 	case STATE_INITIAL:
+	{
+		if(getCurrentEvent()->getEventType() == XFEvent::Initial){
+			GEN(XFNullTransition());
+
+			_currentState = STATE_CHECK_BUTTON;
+
+			status = XFEventStatus::Consumed;
+		}
+		break;
+	}
+	case STATE_CHECK_BUTTON:
+	{
+		if( getCurrentEvent()->getEventType() == XFEvent::Event && getCurrentEvent()->getId() == evButtonIrqId ){
+			scheduleTimeout(0, 100);
+
+			_currentState = STATE_DEBOUNCE;
+
+			status = XFEventStatus::Consumed;
+		}
+		break;
+	}
+	case STATE_DEBOUNCE:
+	{
+		if(getCurrentEvent()->getEventType() == XFEvent::Timeout){
+			(provider->*callback)(0, true);
+
+			_currentState = STATE_CHECK_BUTTON;
+
+			status = XFEventStatus::Consumed;
+		}
+		break;
+	}
+	default:
+		break;
 	}
 	return status;
 }

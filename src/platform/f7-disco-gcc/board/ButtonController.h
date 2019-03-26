@@ -10,6 +10,8 @@
 
 #include "interface/buttonirq.h"
 #include "interface/buttonscontrollercallbackcaller.h"
+#include "xf/behavior.h"
+#include "xf/eventstatus.h"
 
 class ButtonController : public interface::ButtonsControllerCallbackProvider,
 						 public interface::ButtonIrq,
@@ -19,7 +21,8 @@ public:
 	ButtonController();
 	virtual ~ButtonController();
 
-protected:
+	static ButtonController * getInstance();     ///< Returns a pointer to the single instance of the class.
+
 	virtual void onIrq();	///< @brief Called by the ISR.
 	/**
 	* @brief Registers a callback method with its called pointer (callback provider).
@@ -33,6 +36,9 @@ protected:
 	* This method needs to be overridden to implement the
 	* behavior (i.e. state machine) needed.
 	*/
+
+protected:
+
 	virtual XFEventStatus processEvent();
 
     typedef enum
@@ -48,6 +54,16 @@ protected:
 private:
 	ButtonsControllerCallbackProvider* provider;
 	ButtonsControllerCallbackProvider::CallbackMethod callback;
+	bool Button0Pressed;
+	bool Button1Pressed;
+	bool Button2Pressed;
+	bool Button3Pressed;
+	bool Button0Irq;
+	bool Button1Irq;
+	bool Button2Irq;
+	bool Button3Irq;
+
+
 };
 
 #endif /* BUTTONCONTROLLER_H_ */

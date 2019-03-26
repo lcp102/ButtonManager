@@ -15,7 +15,6 @@ namespace app {
 
 class ButtonEventsLogger : public interface::ButtonEventsHandlerObserver,
 						   public XFBehavior
-
 {
 public:
 	ButtonEventsLogger();
@@ -45,7 +44,6 @@ protected:
 private:
     ButtonIndex _buttonIndex;
     bool isShort;
-
 
 };
 }//namespace app
