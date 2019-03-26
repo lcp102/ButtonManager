@@ -5,8 +5,9 @@ typedef enum
 {
 	evButtonIrqId = 1,
 	evButtonPressedId,
-	evButtonReleasedId
-
+	evButtonReleasedId,
+	evButtonLongPressedId,
+	evButtonShortPressedId,
 } EventIds;
 
 #endif // EVENTS_H

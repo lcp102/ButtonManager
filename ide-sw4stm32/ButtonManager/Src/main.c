@@ -38,10 +38,12 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f7xx_hal.h"
-#include "app/factory.h"
+
 
 /* USER CODE BEGIN Includes */
-
+#include "app/factory.h"
+#include "xf/xf.h"
+#include "trace/trace.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -123,7 +125,7 @@ int main(void)
 
   /* USER CODE BEGIN Init */
   Factory_initialize();
-
+  XF_initialize(20);
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -160,6 +162,7 @@ int main(void)
   {
 
   /* USER CODE END WHILE */
+	  XF_execOnce();
 
   /* USER CODE BEGIN 3 */
 

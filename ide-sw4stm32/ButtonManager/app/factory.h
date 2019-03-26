@@ -15,7 +15,8 @@
 //
 #ifdef __cplusplus
 #include "buttonEventsLogger.h"
-#include "statemachine01.h"
+
+namespace app {
 
 class Factory {
 public:
@@ -25,13 +26,11 @@ public:
 	static void build(); // initialize relations between objects
 	static ButtonEventsLogger* getLogger(); // get the instance of the logger
 
-protected:
-	static StateMachine01 _task01;      ///< First instance of StateMachine01
 
 private:
 	static ButtonEventsLogger* logger;
 };
-
+}// namespace app
 #endif // __cplusplus
 //
 // What is seen by the C and C++ compiler

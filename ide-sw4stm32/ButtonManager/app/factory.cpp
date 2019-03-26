@@ -8,17 +8,17 @@
 #include <app/factory.h>
 #include "xf/xf.h"
 #include "trace/trace.h"
-
+ using namespace app;
 
 void Factory_initialize(){
-	Factory::initialize();
+	app::Factory::initialize();
+	Trace::initialize();
 }
 void Factory_build(){
-	Factory::build();
+	app::Factory::build();
 }
 
-ButtonEventsLogger* Factory::logger = nullptr;
-StateMachine01 Factory::_task01(1000, "Say Hello");
+ButtonEventsLogger* app::Factory::logger = nullptr;
 
 
 Factory::Factory() {
@@ -29,22 +29,23 @@ Factory::~Factory() {
 }
 
 void Factory::initialize() {
-	if(!Factory::logger){
-		Factory::logger = new ButtonEventsLogger();
+	if(!app::Factory::logger){
+		app::Factory::logger = new ButtonEventsLogger();
 	}
 	// initilize the XF
-	Trace::initialize();
-	XF_initialize(20);
 }
 
 void Factory::build() {
 
 	//start the xf
 	XF_exec();
-    _task01.startBehavior();
+	logger->startBehavior();
+	logger->onButtonLongPressed(1);
+	logger->onButtonShortPressed(2);
 
 }
 
 ButtonEventsLogger* Factory::getLogger() {
-	return Factory::logger;
+	return app::Factory::logger;
 }
+

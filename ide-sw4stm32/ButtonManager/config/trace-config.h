@@ -11,7 +11,7 @@
  * cause other projects to no more build!
  */
 #include "stm32f7xx_hal.h"                      // Do not use "mcu/mcu.h" here!
-
+#ifdef __cplusplus
 extern "C" UART_HandleTypeDef huart1;           // Defined in main.c
 
 #define USE_PLATFORM_F7_DISCO_GCC_TRACE         1
@@ -26,5 +26,5 @@ extern "C" UART_HandleTypeDef huart1;           // Defined in main.c
 
 #define USE_TRACE_EXAMPLE		0
 #define TRACE_ADD_CRLF_SEQU		0
-
+#endif
 #endif // TRACE_CONFIG_H
