@@ -23,6 +23,8 @@ public:
 
 	static ButtonController * getInstance();     ///< Returns a pointer to the single instance of the class.
 
+	static void setPushedButton(uint16_t GPIO_Pin);
+
 	virtual void onIrq();	///< @brief Called by the ISR.
 	/**
 	* @brief Registers a callback method with its called pointer (callback provider).
@@ -58,10 +60,7 @@ private:
 	bool Button1Pressed;
 	bool Button2Pressed;
 	bool Button3Pressed;
-	bool Button0Irq;
-	bool Button1Irq;
-	bool Button2Irq;
-	bool Button3Irq;
+	uint16_t pin;
 
 
 };

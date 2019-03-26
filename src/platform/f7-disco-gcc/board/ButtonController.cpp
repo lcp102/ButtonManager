@@ -15,10 +15,6 @@ ButtonController::ButtonController() {
 	Button1Pressed = false;
 	Button2Pressed = false;
 	Button3Pressed = false;
-	Button0Irq = false;
-	Button1Irq = false;
-	Button2Irq = false;
-	Button3Irq = false;
 }
 
 ButtonController::~ButtonController() {
@@ -42,6 +38,12 @@ ButtonController* ButtonController::getInstance() {
 		ButtonControllerInstance = new ButtonController();
 	}
 	return ButtonControllerInstance;
+}
+
+void ButtonController::setPushedButton(uint16_t GPIO_Pin) {
+	switch(GPIO_Pin){
+	case PI2:
+	}
 }
 
 XFEventStatus ButtonController::processEvent() {
