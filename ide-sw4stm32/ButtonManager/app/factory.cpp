@@ -9,6 +9,7 @@
 #include "xf/xf.h"
 #include "trace/trace.h"
 #include "xf/port/default/resourcefactory-default.h"
+#include "platform/f7-disco-gcc/board/ButtonController.h"
  using namespace app;
 
 void Factory_initialize(){
@@ -33,7 +34,6 @@ void Factory::initialize() {
 	if(app::Factory::logger == nullptr){
 		app::Factory::logger = new ButtonEventsLogger();
 	}
-	// initilize the XF
 }
 
 void Factory::build() {
@@ -41,6 +41,7 @@ void Factory::build() {
 	//start the xf
 	XFResourceFactoryDefault::getInstance()->getDefaultDispatcher()->start();
 	app::Factory::logger->startBehavior();
+	ButtonController::getInstance()->startBehavior();
 }
 
 ButtonEventsLogger* Factory::getLogger() {

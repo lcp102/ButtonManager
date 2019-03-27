@@ -44,7 +44,7 @@ XFEventStatus ButtonEventsLogger::processEvent() {
 	{
 		if(getCurrentEvent()->getEventType() == XFEvent::Initial){
 			GEN(XFNullTransition());
-			onButtonLongPressed(1);
+
 			status = XFEventStatus::Consumed;
 
 			_currentState = STATE_WAIT;
@@ -95,8 +95,6 @@ XFEventStatus ButtonEventsLogger::processEvent() {
 			_currentState = STATE_WAIT;
 
 			status = XFEventStatus::Consumed;
-			onButtonShortPressed(2);
-
 		}
 		break;
 	}

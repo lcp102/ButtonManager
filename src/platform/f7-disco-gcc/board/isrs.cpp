@@ -5,7 +5,6 @@
 
 extern "C" void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-	Trace::out("callback GPIO : Pin %d  pressed", GPIO_Pin);
     switch (GPIO_Pin)
     {
     case BUTTON0_Pin:

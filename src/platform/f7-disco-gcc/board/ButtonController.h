@@ -12,6 +12,7 @@
 #include "interface/buttonscontrollercallbackcaller.h"
 #include "xf/behavior.h"
 #include "xf/eventstatus.h"
+#include "stm32f7xx_hal_gpio.h"
 
 class ButtonController : public interface::ButtonsControllerCallbackProvider,
 						 public interface::ButtonIrq,
@@ -26,6 +27,7 @@ public:
 	static void setPushedButton(uint16_t GPIO_Pin);
 
 	virtual void onIrq();	///< @brief Called by the ISR.
+
 	/**
 	* @brief Registers a callback method with its called pointer (callback provider).
 	*
@@ -33,14 +35,15 @@ public:
 	*/
 	virtual bool registerCallback(ButtonsControllerCallbackProvider * callbackProvider,
 	                              ButtonsControllerCallbackProvider::CallbackMethod callbackMethod);
+
+protected:
+
+	void checkButtons();
 	/**
 	* Executes the current event in its implemented behavior.
 	* This method needs to be overridden to implement the
 	* behavior (i.e. state machine) needed.
 	*/
-
-protected:
-
 	virtual XFEventStatus processEvent();
 
     typedef enum
@@ -53,13 +56,11 @@ protected:
 
     controllerState _currentState;
 
+
 private:
 	ButtonsControllerCallbackProvider* provider;
 	ButtonsControllerCallbackProvider::CallbackMethod callback;
-	bool Button0Pressed;
-	bool Button1Pressed;
-	bool Button2Pressed;
-	bool Button3Pressed;
+	GPIO_PinState state [4];
 	uint16_t pin;
 
 
