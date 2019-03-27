@@ -12,7 +12,7 @@
 #include "interface/buttonscontrollercallbackcaller.h"
 #include "xf/behavior.h"
 #include "xf/eventstatus.h"
-#include "stm32f7xx_hal_gpio.h"
+//#include "stm32f7xx_hal_gpio.h"
 
 class ButtonController : public interface::ButtonsControllerCallbackProvider,
 						 public interface::ButtonIrq,
@@ -54,6 +54,12 @@ protected:
     	STATE_DEBOUNCE = 3
     }controllerState;
 
+    typedef enum
+    {
+      GPIO_PIN_RESET = 0,
+      GPIO_PIN_SET
+    }GPIO_PinState;
+
     controllerState _currentState;
 
 
@@ -61,9 +67,6 @@ private:
 	ButtonsControllerCallbackProvider* provider;
 	ButtonsControllerCallbackProvider::CallbackMethod callback;
 	GPIO_PinState state [4];
-	uint16_t pin;
-
-
 };
 
 #endif /* BUTTONCONTROLLER_H_ */
