@@ -121,8 +121,8 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  Factory_initialize();
   XF_initialize(20);
+  Factory_initialize();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -150,7 +150,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   Factory_build();
   trace_out("begin main");
-
+  //XF_exec();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -159,9 +159,8 @@ int main(void)
   {
 
   /* USER CODE END WHILE */
-
   /* USER CODE BEGIN 3 */
-
+	  XF_execOnce();
   }
   /* USER CODE END 3 */
 

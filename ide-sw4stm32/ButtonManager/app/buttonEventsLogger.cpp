@@ -18,6 +18,7 @@ ButtonEventsLogger::ButtonEventsLogger() {
 	_currentState = STATE_INITIAL;
 	_buttonIndex = 10;
 }
+
 ButtonEventsLogger::~ButtonEventsLogger() {
 	// TODO Auto-generated destructor stub
 }
@@ -45,6 +46,8 @@ XFEventStatus ButtonEventsLogger::processEvent() {
 			GEN(XFNullTransition());
 			onButtonLongPressed(1);
 			status = XFEventStatus::Consumed;
+
+			_currentState = STATE_WAIT;
 		}
 
 		break;
@@ -72,13 +75,13 @@ XFEventStatus ButtonEventsLogger::processEvent() {
 	case STATE_SHORTPRESSED:
 	{
 		if(getCurrentEvent()->getEventType() == XFEvent::NullTransition){
-			GEN(XFNullTransition);
-
 			Trace::out("ButtonEventsLogger : Button %d short pressed",_buttonIndex);
 
 			_currentState = STATE_WAIT;
 
 			status = XFEventStatus::Consumed;
+
+			GEN(XFNullTransition);
 		}
 		break;
 	}
@@ -86,12 +89,14 @@ XFEventStatus ButtonEventsLogger::processEvent() {
 	{
 		if(getCurrentEvent()->getEventType() == XFEvent::NullTransition){
 			GEN(XFNullTransition);
-			onButtonShortPressed(2);
+
 			Trace::out("ButtonEventsLogger : Button %d long pressed",_buttonIndex);
 
-			_currentState = STATE_LONGPRESSED;
+			_currentState = STATE_WAIT;
 
 			status = XFEventStatus::Consumed;
+			onButtonShortPressed(2);
+
 		}
 		break;
 	}

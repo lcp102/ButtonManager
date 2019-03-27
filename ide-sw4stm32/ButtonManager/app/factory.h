@@ -28,7 +28,7 @@ public:
 
 
 private:
-	static ButtonEventsLogger* logger;
+	static app::ButtonEventsLogger* logger;
 };
 }// namespace app
 #endif // __cplusplus

@@ -8,6 +8,7 @@
 #include <app/factory.h>
 #include "xf/xf.h"
 #include "trace/trace.h"
+#include "xf/port/default/resourcefactory-default.h"
  using namespace app;
 
 void Factory_initialize(){
@@ -18,18 +19,18 @@ void Factory_build(){
 	app::Factory::build();
 }
 
-ButtonEventsLogger* app::Factory::logger = nullptr;
+app::ButtonEventsLogger* app::Factory::logger = nullptr;
 
 
 Factory::Factory() {
 }
 
 Factory::~Factory() {
-	delete logger;
+	delete app::Factory::logger;
 }
 
 void Factory::initialize() {
-	if(!app::Factory::logger){
+	if(app::Factory::logger == nullptr){
 		app::Factory::logger = new ButtonEventsLogger();
 	}
 	// initilize the XF
@@ -38,8 +39,8 @@ void Factory::initialize() {
 void Factory::build() {
 
 	//start the xf
-	XF_exec();
-	logger->startBehavior();
+	XFResourceFactoryDefault::getInstance()->getDefaultDispatcher()->start();
+	app::Factory::logger->startBehavior();
 }
 
 ButtonEventsLogger* Factory::getLogger() {

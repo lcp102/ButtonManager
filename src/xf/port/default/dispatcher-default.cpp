@@ -18,8 +18,7 @@ XFDispatcherDefault::XFDispatcherDefault() :
 	_bExecuting(false),
 	_pMutex(nullptr)
 {
-	_pMutex = XFResourceFactory::getInstance()->createMutex();
-	assert(_pMutex);
+
 }
 
 XFDispatcherDefault::~XFDispatcherDefault()
@@ -29,8 +28,12 @@ XFDispatcherDefault::~XFDispatcherDefault()
 
 void XFDispatcherDefault::start()
 {
-        assert(_pMutex);
-	_bExecuting = true;
+	if (!_bExecuting)
+	{
+		_pMutex = XFResourceFactory::getInstance()->createMutex();
+		assert(_pMutex);
+		_bExecuting = true;
+	}
 }
 
 void XFDispatcherDefault::stop()
@@ -40,6 +43,7 @@ void XFDispatcherDefault::stop()
 
 void XFDispatcherDefault::pushEvent(XFEvent * pEvent)
 {
+    assert(_pMutex);
 	_pMutex->lock();
 	{
 #ifdef XF_TRACE_EVENT_PUSH_POP
@@ -81,6 +85,7 @@ int XFDispatcherDefault::execute(const void * param /* = nullptr */)
 
 int XFDispatcherDefault::executeOnce()
 {
+    assert(_pMutex);
     if (!_events.empty() and _bExecuting)
     {
         const XFEvent * pEvent;
