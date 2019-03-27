@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>ButtonManager</name>
-	<comment></comment>
+	<comment />
 	<projects>
 	</projects>
 	<buildSpec>
@@ -29,27 +29,27 @@
 		<link>
 			<name>event</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/src/event</locationURI>
+			<location>PARENT-2-PROJECT_LOC/src/event</location>
 		</link>
 		<link>
 			<name>interface</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/src/interface</locationURI>
+			<location>PARENT-2-PROJECT_LOC/src/interface</location>
 		</link>
 		<link>
 			<name>platform</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/src/platform</locationURI>
+			<location>PARENT-2-PROJECT_LOC/src/platform</location>
 		</link>
 		<link>
 			<name>trace</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/src/mdw/trace</locationURI>
+			<location>PARENT-2-PROJECT_LOC/src/mdw/trace</location>
 		</link>
 		<link>
 			<name>xf</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/src/xf</locationURI>
+			<location>PARENT-2-PROJECT_LOC/src/xf</location>
 		</link>
 	</linkedResources>
 </projectDescription>

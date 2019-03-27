@@ -41,9 +41,7 @@ ButtonController* ButtonController::getInstance() {
 }
 
 void ButtonController::setPushedButton(uint16_t GPIO_Pin) {
-	switch(GPIO_Pin){
-	case PI2:
-	}
+
 }
 
 XFEventStatus ButtonController::processEvent() {
