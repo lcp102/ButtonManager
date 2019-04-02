@@ -27,10 +27,11 @@ public:
 	void onButtonChanged(uint16_t buttonIndex, bool pressed);
 	void startInternalSM();
 
-
 protected:
 	virtual void notifyButtonShortPressed(ButtonIndex buttonIndex);	            ///< @brief Notifies observers about a button short pressed.
     virtual void notifyButtonLongPressed(ButtonIndex buttonIndex);              ///< @brief Notifies observers about a button long pressed.
+
+protected:
 	ButtonEventsHandler();
 
 
@@ -42,7 +43,5 @@ private:
 
 };
 
-
-} /* namespace button */
 
 #endif /* BUTTONEVENTSHANDLER_H_ */

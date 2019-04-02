@@ -15,7 +15,6 @@
 
 class XFEventStatus;
 
-
 class ButtonController : public interface::ButtonsControllerCallbackProvider,
 						 public interface::ButtonIrq,
 						 public XFBehavior

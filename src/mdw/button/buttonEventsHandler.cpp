@@ -45,9 +45,9 @@ void ButtonEventsHandler::unsubscribe(
 void ButtonEventsHandler::startInternalSM() {
 	for(int i = 0; i < 4 ; i++){
 		sm[i]->startBehavior();
-
 	}
 }
+
 
 void ButtonEventsHandler::notifyButtonShortPressed(ButtonIndex buttonIndex) {
 	for(ObserverList::iterator it = observers.begin();
@@ -121,4 +121,5 @@ ButtonEventsHandler::ButtonEventsHandler() {
 		sm[i]->setButtonIndex(i);
 	}
 }
+
 
