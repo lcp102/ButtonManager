@@ -42,7 +42,11 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/xf/port&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/platform/f7-disco-gcc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/platform/f7-disco-gcc/mcu&quot;"/>
+<<<<<<< HEAD
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/mdw/button&quot;"/>
+=======
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/mdw&quot;"/>
+>>>>>>> 32e04adc5ec81298dfa3128d89b38c10d9121335
 									<listOptionValue builtIn="false" value="../Drivers/STM32F7xx_HAL_Driver/Inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/mdw/trace&quot;"/>
@@ -68,13 +72,20 @@
 									<listOptionValue builtIn="false" value="../app"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src&quot;"/>
+<<<<<<< HEAD
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/mdw&quot;"/>
+=======
+>>>>>>> 32e04adc5ec81298dfa3128d89b38c10d9121335
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/xf/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/xf/port&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/interface&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/platform/f7-disco-gcc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/platform/f7-disco-gcc/mcu&quot;"/>
+<<<<<<< HEAD
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/mdw/button&quot;"/>
+=======
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/mdw&quot;"/>
+>>>>>>> 32e04adc5ec81298dfa3128d89b38c10d9121335
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/mdw/trace&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../src/platform/f7-disco-gcc/board&quot;"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32F7xx_HAL_Driver/Inc"/>
