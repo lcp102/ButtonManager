@@ -3,8 +3,8 @@
 
 #include "buttoneventshandlersubject.h"
 
-
 class ButtonEventsHandler;
+class ButtonStateSM;
 
 namespace interface {
 
@@ -15,6 +15,7 @@ class ButtonEventsHandlerObserver
 {
 	friend class ButtonEventsHandlerSubject;
 	friend class ::ButtonEventsHandler;
+	friend class ::ButtonStateSM;
 
 public:
 	typedef ButtonEventsHandlerSubject::ButtonIndex ButtonIndex;

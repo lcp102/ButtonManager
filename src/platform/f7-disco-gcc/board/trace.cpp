@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include "trace/trace.h"// Include the general trace.h file (common for many projects)
+#include "trace.h"
 #include "hal/uart.h"
 #ifndef TRACE_ADD_CRLF_SEQU
 #define TRACE_ADD_CRLF_SEQU 	0

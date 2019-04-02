@@ -2,6 +2,7 @@
 #define INTERFACE_BUTTONEVENTSHANDLER_SUBJECT_H
 
 #include <stdint.h>
+//#include "app/buttonEventsLogger.h"
 
 namespace interface {
 
@@ -12,6 +13,7 @@ class ButtonEventsHandlerObserver;
  */
 class ButtonEventsHandlerSubject
 {
+	friend class ButtonEventsLogger;
 public:
 	typedef uint8_t ButtonIndex;
 

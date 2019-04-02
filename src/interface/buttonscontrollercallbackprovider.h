@@ -2,6 +2,7 @@
 #define INTERFACE_BUTTONS_CONTROLLER_CALLBACK_PROVIDER_H
 
 #include <cstdint>
+//#include "buttonscontrollercallbackcaller.h"
 
 namespace interface {
 
@@ -11,6 +12,7 @@ namespace interface {
  */
 class ButtonsControllerCallbackProvider
 {
+	friend class ButtonsControllerCallbackCaller;
 public:
     virtual ~ButtonsControllerCallbackProvider() {}
 

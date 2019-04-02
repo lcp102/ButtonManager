@@ -7,10 +7,13 @@
 
 #include <app/factory.h>
 #include "xf/xf.h"
-#include "trace/trace.h"
+#include <cstdint>
+#include "trace.h"
 #include "xf/port/default/resourcefactory-default.h"
 #include "platform/f7-disco-gcc/board/ButtonController.h"
- using namespace app;
+#include "app/buttonEventsLogger.h"
+#include "interface/buttonscontrollercallbackprovider.h"
+#include "buttonEventsHandler.h"
 
 void Factory_initialize(){
 	app::Factory::initialize();
@@ -20,31 +23,38 @@ void Factory_build(){
 	app::Factory::build();
 }
 
+
 app::ButtonEventsLogger* app::Factory::logger = nullptr;
 
 
-Factory::Factory() {
+app::Factory::Factory() {
 }
 
-Factory::~Factory() {
+app::Factory::~Factory() {
 	delete app::Factory::logger;
 }
 
-void Factory::initialize() {
+void app::Factory::initialize() {
 	if(app::Factory::logger == nullptr){
 		app::Factory::logger = new ButtonEventsLogger();
 	}
 }
 
-void Factory::build() {
+void app::Factory::build() {
 
-	//start the xf
+	//bind class
+	ButtonEventsHandler::getInstance()->subscribe(app::Factory::logger);
+	ButtonController::getInstance()->registerCallback(ButtonEventsHandler::getInstance(),
+			(interface::ButtonsControllerCallbackProvider::CallbackMethod)&ButtonEventsHandler::onButtonChanged);
+
+	//start the behavioral classes
 	XFResourceFactoryDefault::getInstance()->getDefaultDispatcher()->start();
 	app::Factory::logger->startBehavior();
 	ButtonController::getInstance()->startBehavior();
+	ButtonEventsHandler::getInstance()->startInternalSM();
 }
 
-ButtonEventsLogger* Factory::getLogger() {
+app::ButtonEventsLogger* app::Factory::getLogger() {
 	return app::Factory::logger;
 }
 

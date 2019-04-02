@@ -2,8 +2,7 @@
 #define MCU_STM32F7_MCU_H
 
 #include "stm32f7xx_hal.h"
-#include "trace/trace.h"
-
+#include "trace.h"
 class Mcu
 {
 public:

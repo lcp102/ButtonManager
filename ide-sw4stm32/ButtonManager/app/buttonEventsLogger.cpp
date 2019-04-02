@@ -7,10 +7,13 @@
 
 #include <app/buttonEventsLogger.h>
 #include "config/trace-config.h"
-#include "trace/trace.h"
+#include "trace.h"
 #include <stdio.h>
 #include "event/events.h"
 #include "event/evbuttonpressed.h"
+#include "interface/buttonEventsHandlerObserver.h"
+#include "xf/behavior.h"
+
 
 using namespace app;
 
@@ -75,7 +78,7 @@ XFEventStatus ButtonEventsLogger::processEvent() {
 	case STATE_SHORTPRESSED:
 	{
 		if(getCurrentEvent()->getEventType() == XFEvent::NullTransition){
-			Trace::out("ButtonEventsLogger : Button %d short pressed",_buttonIndex);
+			Trace::out("ButtonEventsLogger : Button %d short pressed \r\n",_buttonIndex);
 
 			_currentState = STATE_WAIT;
 
@@ -90,7 +93,7 @@ XFEventStatus ButtonEventsLogger::processEvent() {
 		if(getCurrentEvent()->getEventType() == XFEvent::NullTransition){
 			GEN(XFNullTransition);
 
-			Trace::out("ButtonEventsLogger : Button %d long pressed",_buttonIndex);
+			Trace::out("ButtonEventsLogger : Button %d long pressed \r\n",_buttonIndex);
 
 			_currentState = STATE_WAIT;
 
@@ -103,7 +106,5 @@ XFEventStatus ButtonEventsLogger::processEvent() {
 		break;
 
 	}
-
-
 	return status;
 }

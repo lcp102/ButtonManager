@@ -1,5 +1,5 @@
 #include "config/trace-config.h"
-#include "trace/trace.h"
+#include "trace.h"
 
 #if (USE_TRACE_EXAMPLE != 0)
 

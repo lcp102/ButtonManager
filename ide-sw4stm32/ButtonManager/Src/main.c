@@ -42,7 +42,7 @@
 /* USER CODE BEGIN Includes */
 #include "app/factory.h"
 #include "xf/xf.h"
-#include "trace/trace.h"
+#include "trace.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -147,7 +147,7 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   Factory_build();
-  trace_out("begin main");
+  trace_out("begin main \r\n");
   //XF_exec();
   /* USER CODE END 2 */
 
@@ -1011,7 +1011,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : BUTTON1_Pin BUTTON0_Pin */
   GPIO_InitStruct.Pin = BUTTON1_Pin|BUTTON0_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
 
@@ -1124,7 +1124,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : BUTTON2_Pin BUTTON3_Pin */
   GPIO_InitStruct.Pin = BUTTON2_Pin|BUTTON3_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 

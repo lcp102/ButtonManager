@@ -14,7 +14,9 @@
 // What is seen only by the C++ compiler
 //
 #ifdef __cplusplus
-#include "buttonEventsLogger.h"
+namespace app{
+	class ButtonEventsLogger;
+}
 
 namespace app {
 
@@ -28,7 +30,7 @@ public:
 
 
 private:
-	static app::ButtonEventsLogger* logger;
+	static ButtonEventsLogger* logger;
 };
 }// namespace app
 #endif // __cplusplus
