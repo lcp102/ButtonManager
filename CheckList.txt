@@ -1,0 +1,8 @@
+1. Create project with stm32CubeMX => Check
+2. Configure GPIOs for the buttons => Check
+3. Generate Code => Check
+4. add XF packages => Check
+5. Implement Factory and ButtonEventsLogger + Tests => Check
+6. Implement ButtonsController + Tests => Check
+7. Implement ButtonEventsHandler with it states machines + Test => Check
+8. Decoupling ButtonEventsLogger from ButtonEventsHandler => Check

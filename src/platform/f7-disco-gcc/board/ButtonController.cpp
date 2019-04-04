@@ -58,11 +58,9 @@ bool ButtonController::registerCallback(
  * @brief
  * @return an instance of a ButtonController
  */
-ButtonController* ButtonController::getInstance() {
-	static ButtonController* ButtonControllerInstance = nullptr;
-	if(ButtonControllerInstance == nullptr){
-		ButtonControllerInstance = new ButtonController();
-	}
+ButtonController& ButtonController::getInstance() {
+	static ButtonController ButtonControllerInstance;
+
 	return ButtonControllerInstance;
 }
 

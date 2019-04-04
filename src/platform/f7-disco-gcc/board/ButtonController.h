@@ -24,7 +24,7 @@ public:
 	ButtonController();
 	virtual ~ButtonController();
 
-	static ButtonController * getInstance();     ///< Returns a pointer to the single instance of the class.
+	static ButtonController& getInstance();     ///< Returns a pointer to the single instance of the class.
 
 	virtual void onIrq();	///< @brief Called by the ISR.
 

@@ -63,13 +63,13 @@ void app::Factory::build() {
 
 	//bind class
 	ButtonEventsHandler::getInstance()->subscribe(app::Factory::getLogger());
-	ButtonController::getInstance()->registerCallback(ButtonEventsHandler::getInstance(),
+	ButtonController::getInstance().registerCallback(ButtonEventsHandler::getInstance(),
 			(interface::ButtonsControllerCallbackProvider::CallbackMethod)&ButtonEventsHandler::onButtonChanged);
 
 	//start the behavioral classes
 	XFResourceFactoryDefault::getInstance()->getDefaultDispatcher()->start();
 	app::Factory::getLogger()->startBehavior();
-	ButtonController::getInstance()->startBehavior();
+	ButtonController::getInstance().startBehavior();
 	ButtonEventsHandler::getInstance()->startInternalSM();
 }
 
