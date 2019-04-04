@@ -15,46 +15,72 @@
 #include "interface/buttonscontrollercallbackprovider.h"
 #include "buttonEventsHandler.h"
 
+/**
+ * @brief method call by C compiler
+ * Initialize Factory calling it C++ version
+ */
 void Factory_initialize(){
 	app::Factory::initialize();
-	Trace::initialize();
 }
+
+/**
+ * @brief method call by C compiler
+ * Build Factory calling it C++ version
+ */
 void Factory_build(){
 	app::Factory::build();
 }
 
-
+// static attribute
 app::ButtonEventsLogger* app::Factory::logger = nullptr;
 
-
+/**
+ * @brief Constructor of Factory
+ */
 app::Factory::Factory() {
 }
 
+/**
+ * @brief Destructor of Factory
+ */
 app::Factory::~Factory() {
 	delete app::Factory::logger;
 }
 
+/**
+ * @brief Initialize Factory
+ * Create all object needed for the project
+ */
 void app::Factory::initialize() {
-	if(app::Factory::logger == nullptr){
-		app::Factory::logger = new ButtonEventsLogger();
-	}
+
 }
 
+/**
+ * @brief Build Factory
+ * Bind object and start state machine of behavioral class
+ */
 void app::Factory::build() {
 
 	//bind class
-	ButtonEventsHandler::getInstance()->subscribe(app::Factory::logger);
+	ButtonEventsHandler::getInstance()->subscribe(app::Factory::getLogger());
 	ButtonController::getInstance()->registerCallback(ButtonEventsHandler::getInstance(),
 			(interface::ButtonsControllerCallbackProvider::CallbackMethod)&ButtonEventsHandler::onButtonChanged);
 
 	//start the behavioral classes
 	XFResourceFactoryDefault::getInstance()->getDefaultDispatcher()->start();
-	app::Factory::logger->startBehavior();
+	app::Factory::getLogger()->startBehavior();
 	ButtonController::getInstance()->startBehavior();
 	ButtonEventsHandler::getInstance()->startInternalSM();
 }
 
+/**
+ * @brief
+ * @return return an instance of ButtonEventsLogger
+ */
 app::ButtonEventsLogger* app::Factory::getLogger() {
+	if(app::Factory::logger == nullptr){
+		app::Factory::logger = new ButtonEventsLogger();
+	}
 	return app::Factory::logger;
 }
 

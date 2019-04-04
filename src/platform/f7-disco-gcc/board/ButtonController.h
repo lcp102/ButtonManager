@@ -11,9 +11,10 @@
 #include "interface/buttonirq.h"
 #include "interface/buttonscontrollercallbackprovider.h"
 #include "xf/behavior.h"
-//#include "stm32f7xx_hal_gpio.h"
+#include "stm32f7xx_hal.h"
 
 class XFEventStatus;
+class evButtonIrq;
 
 class ButtonController : public interface::ButtonsControllerCallbackProvider,
 						 public interface::ButtonIrq,
@@ -45,6 +46,7 @@ protected:
 	*/
 	virtual XFEventStatus processEvent();
 
+	// enum of the state
     typedef enum
     {
     	STATE_UNKWNOWN = 0 ,
@@ -53,12 +55,6 @@ protected:
     	STATE_DEBOUNCE = 3
     }controllerState;
 
-    typedef enum
-    {
-      GPIO_PIN_RESET = 0,
-      GPIO_PIN_SET
-    }GPIO_PinState;
-
     controllerState _currentState;
 
 
@@ -66,6 +62,8 @@ private:
 	ButtonsControllerCallbackProvider* provider;
 	ButtonsControllerCallbackProvider::CallbackMethod callback;
 	GPIO_PinState state [4];
+	evButtonIrq* ev;
+
 };
 
 #endif /* BUTTONCONTROLLER_H_ */

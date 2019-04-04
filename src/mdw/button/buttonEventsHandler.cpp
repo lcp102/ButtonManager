@@ -11,21 +11,38 @@
 #include "event/evbuttonpressed.h"
 #include "event/evbuttonreleased.h"
 
-ButtonEventsHandler::~ButtonEventsHandler() {
 
+/**
+ * @brief Destructor of ButtonEventsHandler
+ */
+ButtonEventsHandler::~ButtonEventsHandler() {
+	for(int i = 0 ; i < 4; i++){
+		delete sm[i];
+		sm[i] = nullptr;
+	}
 }
 
+/**
+ * @brief
+ * @return return an instance of the ButtonEventsHandler
+ */
 ButtonEventsHandler* ButtonEventsHandler::getInstance() {
 	static ButtonEventsHandler ButtonEventsHandlerInstance;
 	return &ButtonEventsHandlerInstance;
 }
 
-bool ButtonEventsHandler::subscribe(
-		interface::ButtonEventsHandlerObserver* observer) {
+/**
+ * @brief add an observer in the list
+ * @return return true if success else false
+ */
+bool ButtonEventsHandler::subscribe(interface::ButtonEventsHandlerObserver* observer) {
 	observers.push_front(observer);
 	return true;
 }
 
+/**
+ * @brief delete an observer in the list
+ */
 void ButtonEventsHandler::unsubscribe(
 		interface::ButtonEventsHandlerObserver* observer) {
 	for (ObserverList::iterator it = observers.begin();
@@ -33,7 +50,6 @@ void ButtonEventsHandler::unsubscribe(
 			{
 				if(*it == observer){
 					observers.erase(it);
-					delete *it;
 					break;
 				}
 				else{
@@ -42,13 +58,18 @@ void ButtonEventsHandler::unsubscribe(
 			}
 }
 
+/**
+ * @brief start the behavior of state machine
+ */
 void ButtonEventsHandler::startInternalSM() {
 	for(int i = 0; i < 4 ; i++){
 		sm[i]->startBehavior();
 	}
 }
 
-
+/**
+ * @brief notify observers about short pressed
+ */
 void ButtonEventsHandler::notifyButtonShortPressed(ButtonIndex buttonIndex) {
 	for(ObserverList::iterator it = observers.begin();
 		             it != observers.end(); it++)
@@ -57,6 +78,9 @@ void ButtonEventsHandler::notifyButtonShortPressed(ButtonIndex buttonIndex) {
 		}
 }
 
+/**
+ * @brief notify observers about long pressed
+ */
 void ButtonEventsHandler::notifyButtonLongPressed(ButtonIndex buttonIndex) {
 	for(ObserverList::iterator it = observers.begin();
 	             it != observers.end(); it++)
@@ -65,6 +89,9 @@ void ButtonEventsHandler::notifyButtonLongPressed(ButtonIndex buttonIndex) {
 	}
 }
 
+/**
+ * @brief advertise state machine about change of button state
+ */
 void ButtonEventsHandler::onButtonChanged(uint16_t buttonIndex, bool pressed) {
 	switch(buttonIndex){
 	case 0:
@@ -110,12 +137,15 @@ void ButtonEventsHandler::onButtonChanged(uint16_t buttonIndex, bool pressed) {
 	}
 }
 
-
+/**
+ * @brief Constructor of ButtonEventsHandler
+ */
 ButtonEventsHandler::ButtonEventsHandler() {
 	sm[0] = new ButtonStateSM();
 	sm[1] = new ButtonStateSM();
 	sm[2] = new ButtonStateSM();
 	sm[3] = new ButtonStateSM();
+	// set the class the state machine must notified
 	for(int i = 0 ; i < 4; i ++){
 		sm[i]->setNotified(this);
 		sm[i]->setButtonIndex(i);

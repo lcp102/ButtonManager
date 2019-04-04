@@ -30,6 +30,7 @@ protected:
      */
     virtual XFEventStatus processEvent();
 
+    // enum of the state machine
     typedef enum
     {
     	STATE_UNKWNOWN = 0 ,

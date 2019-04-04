@@ -12,30 +12,51 @@
 #include "buttonEventsHandler.h"
 
 
+/**
+ * @brief Constructor of ButtonStateSM
+ */
 ButtonStateSM::ButtonStateSM() {
 	_currentState = STATE_INITIAL;
 }
 
+/**
+ * @brief Destructor of ButtonStateSM
+ */
 ButtonStateSM::~ButtonStateSM() {
 
 }
 
+/**
+ * @brief Set the object to notify
+ */
 void ButtonStateSM::setNotified(ButtonEventsHandler* notified) {
 	_notified = notified;
 }
 
+/**
+ * @brief Set the index of the button
+ */
 void ButtonStateSM::setButtonIndex(ButtonIndex index) {
 	_buttonIndex = index;
 }
 
+/**
+ * @brief launch a event evButtonPressed in the state machine
+ */
 void ButtonStateSM::buttonPressed() {
 	GEN(evButtonPressed());
 }
 
+/**
+ * @brief launch a event evButtonReleased in the state machine
+ */
 void ButtonStateSM::buttonReleased() {
 	GEN(evButtonReleased);
 }
 
+/**
+ * @brief processing state machine
+ */
 XFEventStatus ButtonStateSM::processEvent() {
 	XFEventStatus status = XFEventStatus::Unknown;
 	handlerState _oldState = _currentState;
@@ -114,12 +135,15 @@ XFEventStatus ButtonStateSM::processEvent() {
 		}
 		case STATE_BUTTON_SHORT_PRESSED:
 		{
+			// unschedule timeout because short pressed
 			unscheduleTimeout(EventIds::evButtonPressedId);
+			// notify the handler that the button was short pressed
 			_notified->notifyButtonShortPressed(_buttonIndex);
 			break;
 		}
 		case STATE_BUTTON_LONG_PRESSED:
 		{
+			// notify the handler that the button is long pressed
 			_notified->notifyButtonLongPressed(_buttonIndex);
 			break;
 		}

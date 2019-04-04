@@ -17,27 +17,42 @@
 
 using namespace app;
 
+/**
+ * @brief Constructor of ButtonEventsLogger
+ */
 ButtonEventsLogger::ButtonEventsLogger() {
 	_currentState = STATE_INITIAL;
-	_buttonIndex = 10;
+	_buttonIndex = 0;
+	isShort = false;
 }
 
+/**
+ * @brief Destructor of ButtonEventsLogger
+ */
 ButtonEventsLogger::~ButtonEventsLogger() {
-	// TODO Auto-generated destructor stub
 }
 
+/**
+ * @brief method serving to notify that a button was short pressed
+ */
 void ButtonEventsLogger::onButtonShortPressed(ButtonIndex buttonIndex) {
 	_buttonIndex = buttonIndex;
 	isShort = true;
 	GEN(evButtonPressed());
 }
 
+/**
+ * @brief method serving to notify that a button was long pressed
+ */
 void ButtonEventsLogger::onButtonLongPressed(ButtonIndex buttonIndex) {
 	_buttonIndex = buttonIndex;
 	isShort = false;
 	GEN(evButtonPressed());
 }
 
+/**
+ * @brief processing state machine
+ */
 XFEventStatus ButtonEventsLogger::processEvent() {
 	XFEventStatus status = XFEventStatus::Unknown;
 

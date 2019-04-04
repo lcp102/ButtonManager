@@ -12,24 +12,40 @@
 #include "trace.h"
 
 
+/**
+ * @brief Constructor of ButtonEventsHandler
+ */
 ButtonController::ButtonController() {
 	_currentState = STATE_INITIAL;
 	callback = nullptr;
 	provider = nullptr;
-	state[0] = (ButtonController::GPIO_PinState)HAL_GPIO_ReadPin(BUTTON0_GPIO_Port, BUTTON0_Pin);
-	state[1] = (ButtonController::GPIO_PinState)HAL_GPIO_ReadPin(BUTTON1_GPIO_Port, BUTTON1_Pin);
-	state[2] = (ButtonController::GPIO_PinState)HAL_GPIO_ReadPin(BUTTON2_GPIO_Port, BUTTON2_Pin);
-	state[3] = (ButtonController::GPIO_PinState)HAL_GPIO_ReadPin(BUTTON3_GPIO_Port, BUTTON3_Pin);
+	// set the initial state of the pin
+	state[0] = HAL_GPIO_ReadPin(BUTTON0_GPIO_Port, BUTTON0_Pin);
+	state[1] = HAL_GPIO_ReadPin(BUTTON1_GPIO_Port, BUTTON1_Pin);
+	state[2] = HAL_GPIO_ReadPin(BUTTON2_GPIO_Port, BUTTON2_Pin);
+	state[3] = HAL_GPIO_ReadPin(BUTTON3_GPIO_Port, BUTTON3_Pin);
+	// forced to create this event here because it's dangerous to create
+	// new object in interrupt.
+	ev = new evButtonIrq();
 }
 
+/**
+ * @brief Destructor of ButtonEventsHandler
+ */
 ButtonController::~ButtonController() {
-	// TODO Auto-generated destructor stub
+	delete ev;
 }
 
+/**
+ * @brief method call by ISR
+ */
 void ButtonController::onIrq() {
-	GEN(evButtonIrq());
+	pushEvent(ev);
 }
 
+/**
+ * @brief Destructor of ButtonEventsHandler
+ */
 bool ButtonController::registerCallback(
 		ButtonsControllerCallbackProvider* callbackProvider,
 		ButtonsControllerCallbackProvider::CallbackMethod callbackMethod) {
@@ -38,6 +54,10 @@ bool ButtonController::registerCallback(
 	return true;
 }
 
+/**
+ * @brief
+ * @return an instance of a ButtonController
+ */
 ButtonController* ButtonController::getInstance() {
 	static ButtonController* ButtonControllerInstance = nullptr;
 	if(ButtonControllerInstance == nullptr){
@@ -46,12 +66,15 @@ ButtonController* ButtonController::getInstance() {
 	return ButtonControllerInstance;
 }
 
+/**
+ * @brief check state of all button and notify the provider of the callback method
+ */
 void ButtonController::checkButtons() {
 	// CHECK BUTTON 0
-	if (state[0] != (ButtonController::GPIO_PinState) HAL_GPIO_ReadPin(BUTTON0_GPIO_Port, BUTTON0_Pin)){
+	if (state[0] !=  HAL_GPIO_ReadPin(BUTTON0_GPIO_Port, BUTTON0_Pin)){
 		// BUTTON 0 has changed
-		state[0] = (ButtonController::GPIO_PinState) HAL_GPIO_ReadPin(BUTTON0_GPIO_Port, BUTTON0_Pin);
-		// check if is release or pushed
+		state[0] =  HAL_GPIO_ReadPin(BUTTON0_GPIO_Port, BUTTON0_Pin);
+		// check if is released or pushed
 		if(state[0] == GPIO_PIN_RESET){
 			//button pushed
 			(provider->*callback)(0, true);
@@ -62,9 +85,9 @@ void ButtonController::checkButtons() {
 		}
 	}
 	// CHECK BUTTON 1
-	if (state[1] != (ButtonController::GPIO_PinState)HAL_GPIO_ReadPin(BUTTON1_GPIO_Port, BUTTON1_Pin)){
+	if (state[1] != HAL_GPIO_ReadPin(BUTTON1_GPIO_Port, BUTTON1_Pin)){
 		// BUTTON 1 has changed
-		state[1] = (ButtonController::GPIO_PinState)HAL_GPIO_ReadPin(BUTTON1_GPIO_Port, BUTTON1_Pin);
+		state[1] = HAL_GPIO_ReadPin(BUTTON1_GPIO_Port, BUTTON1_Pin);
 		// check if is release or pushed
 		if(state[1] == GPIO_PIN_RESET){
 			//button pushed
@@ -76,9 +99,9 @@ void ButtonController::checkButtons() {
 		}
 	}
 	// CHECK BUTTON 2
-	if (state[2] != (ButtonController::GPIO_PinState)HAL_GPIO_ReadPin(BUTTON2_GPIO_Port, BUTTON2_Pin)){
+	if (state[2] != HAL_GPIO_ReadPin(BUTTON2_GPIO_Port, BUTTON2_Pin)){
 		// BUTTON 2 has changed
-		state[2] = (ButtonController::GPIO_PinState)HAL_GPIO_ReadPin(BUTTON2_GPIO_Port, BUTTON2_Pin);
+		state[2] = HAL_GPIO_ReadPin(BUTTON2_GPIO_Port, BUTTON2_Pin);
 		// check if is release or pushed
 		if(state[2] == GPIO_PIN_RESET){
 			//button pushed
@@ -90,9 +113,9 @@ void ButtonController::checkButtons() {
 		}
 	}
 	// CHECK BUTTON 3
-	if (state[3] != (ButtonController::GPIO_PinState)HAL_GPIO_ReadPin(BUTTON3_GPIO_Port, BUTTON3_Pin)){
+	if (state[3] != HAL_GPIO_ReadPin(BUTTON3_GPIO_Port, BUTTON3_Pin)){
 		// BUTTON 3 has changed
-		state[3] = (ButtonController::GPIO_PinState)HAL_GPIO_ReadPin(BUTTON3_GPIO_Port, BUTTON3_Pin);
+		state[3] = HAL_GPIO_ReadPin(BUTTON3_GPIO_Port, BUTTON3_Pin);
 		// check if is release or pushed
 		if(state[3] == GPIO_PIN_RESET){
 			//button pushed
@@ -105,6 +128,9 @@ void ButtonController::checkButtons() {
 	}
 }
 
+/**
+ * @brief processing state machine
+ */
 XFEventStatus ButtonController::processEvent() {
 	XFEventStatus status = XFEventStatus::Unknown;
 	controllerState _oldState = _currentState;
